@@ -26,28 +26,37 @@ function plotter(d3_AppendToElement,data) {
       .attr("height",this.border.top+this.yAxisPixelLength+this.border.bottom);
 
    // create plot container
-   this.svgPlotContainer = this.svgContainer.append("g").attr("class","scatter-plot")
+   this.gPlotArea = this.svgContainer.append("g").attr("class","scatter-plot")
       .attr("transform","translate("+this.border.left+","+this.border.top+")");
 
    // add axis ticks and numbers
-   this.svgPlotContainer.append("g").attr("class","x-axis")
+   this.gPlotArea.append("g").attr("class","x-axis")
       .attr("transform","translate(0,"+this.yAxisPixelLength+")")
       .call(this.xAxis);
-   this.svgPlotContainer.append("g").attr("class","y-axis").call(this.yAxis);
+   this.gPlotArea.append("g").attr("class","y-axis").call(this.yAxis);
 
    // add grid lines
-   this.svgPlotContainer.append("g").attr("class","grid-lines")
+   this.gPlotArea.append("g").attr("class","grid-lines")
       .attr("transform","translate(0,"+this.yAxisPixelLength+")")
       .call(this.xAxis.tickSize(-this.yAxisPixelLength).tickFormat(""));
-   this.svgPlotContainer.append("g").attr("class","grid-lines")
+   this.gPlotArea.append("g").attr("class","grid-lines")
       .call(this.yAxis.tickSize(-this.xAxisPixelLength).tickFormat(""));
-   this.svgPlotContainer.selectAll(".grid-lines line").style("stroke","lightgrey");
+   this.gPlotArea.selectAll(".grid-lines line").style("stroke","lightgrey");
 
    // add plot border (required to cover up grid line overlay)
-   this.svgPlotContainer.append("rect")
+   this.gPlotArea.append("rect")
       .style("fill","transparent")
       .style("stroke","black")
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
+
+   this.svgContainer.append("text")
+      .attr("transform","translate("+this.border.left/2+","+(this.border.top+5)+") rotate(90)")
+      .text(this.pd.yLabel);
+
+   this.svgContainer.append("text")
+      .attr("x",this.border.left/2+this.xAxisPixelLength)
+      .attr("y",this.border.top+this.yAxisPixelLength+this.border.bottom/2)
+      .text(this.pd.xLabel);
 
 };
