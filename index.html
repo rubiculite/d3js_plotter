@@ -6,7 +6,7 @@
    <script type="text/javascript" charset="utf-8">
       window.addEventListener('load', function(e) {
          document.getElementById("plotter").innerHTML = "<h1>Hello World!</h1>";
-         data = {xMin: 0, xMax: 25, yMin: 0, yMax: 25};
+         data = {xMin: 0, xMax: 25, yMin: 0, yMax: 25, xLabel: "x-axis", yLabel: "y-axis"};
          plot = new plotter(d3.select("#plotter"),data);
       });
    </script>
