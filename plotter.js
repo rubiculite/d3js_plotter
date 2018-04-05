@@ -25,8 +25,25 @@ function plotter(d3_AppendToElement,data) {
    this.svgPlotContainer = this.svgContainer.append("g").attr("class","scatter-plot")
       .attr("transform","translate("+this.boarder.left+","+this.boarder.top+")");
 
+   // add axis ticks and numbers
    this.svgPlotContainer.append("g").attr("class","x-axis")
       .attr("transform","translate(0,"+this.yAxisPixelLength+")")
       .call(this.xAxis);
    this.svgPlotContainer.append("g").attr("class","y-axis").call(this.yAxis);
+
+   // add grid lines
+   this.svgPlotContainer.append("g").attr("class","grid-lines")
+      .attr("transform","translate(0,"+this.yAxisPixelLength+")")
+      .call(this.xAxis.tickSize(-this.yAxisPixelLength).tickFormat(""));
+   this.svgPlotContainer.append("g").attr("class","grid-lines")
+      .call(this.yAxis.tickSize(-this.xAxisPixelLength).tickFormat(""));
+   this.svgPlotContainer.selectAll(".grid-lines line").style("stroke","lightgrey");
+
+   // add plot boarder (required to cover up grid line overlay)
+   this.svgPlotContainer.append("rect")
+      .style("fill","transparent")
+      .style("stroke","black")
+      .attr("width",this.xAxisPixelLength)
+      .attr("height",this.yAxisPixelLength);
+
 };
