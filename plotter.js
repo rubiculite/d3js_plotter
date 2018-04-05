@@ -12,7 +12,7 @@ function plotter(d3_AppendToElement,data) {
    // define plot layout
    this.xAxisPixelLength = 500;
    this.yAxisPixelLength = 400;
-   this.boarder = {top: 50, right: 50, bottom: 75, left: 75};
+   this.border = {top: 50, right: 50, bottom: 75, left: 75};
 
    // define axes
    this.xScale = d3.scaleLinear().domain([this.pd.xMin,this.pd.xMax]).range([0,this.xAxisPixelLength]).nice();
@@ -22,12 +22,12 @@ function plotter(d3_AppendToElement,data) {
 
    // create svg container
    this.svgContainer = d3_AppendToElement.append("svg")
-      .attr("width",this.boarder.left+this.xAxisPixelLength+this.boarder.right)
-      .attr("height",this.boarder.top+this.yAxisPixelLength+this.boarder.bottom);
+      .attr("width",this.border.left+this.xAxisPixelLength+this.border.right)
+      .attr("height",this.border.top+this.yAxisPixelLength+this.border.bottom);
 
    // create plot container
    this.svgPlotContainer = this.svgContainer.append("g").attr("class","scatter-plot")
-      .attr("transform","translate("+this.boarder.left+","+this.boarder.top+")");
+      .attr("transform","translate("+this.border.left+","+this.border.top+")");
 
    // add axis ticks and numbers
    this.svgPlotContainer.append("g").attr("class","x-axis")
@@ -43,7 +43,7 @@ function plotter(d3_AppendToElement,data) {
       .call(this.yAxis.tickSize(-this.xAxisPixelLength).tickFormat(""));
    this.svgPlotContainer.selectAll(".grid-lines line").style("stroke","lightgrey");
 
-   // add plot boarder (required to cover up grid line overlay)
+   // add plot border (required to cover up grid line overlay)
    this.svgPlotContainer.append("rect")
       .style("fill","transparent")
       .style("stroke","black")
