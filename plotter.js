@@ -59,4 +59,9 @@ function plotter(d3_AppendToElement,data) {
       .attr("transform","translate("+this.border.left/2+","+(this.border.top)+") rotate(90)")
       .text(this.pd.yLabel);
 
+   // plot title
+   this.svgContainer.append("text")
+      .attr("x",this.border.left+(this.xAxisPixelLength-5*this.pd.title.length)/2)
+      .attr("y",3*this.border.top/4)
+      .text(this.pd.title);
 };
