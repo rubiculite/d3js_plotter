@@ -50,13 +50,13 @@ function plotter(d3_AppendToElement,data) {
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
 
+   // axis labels
    this.svgContainer.append("text")
-      .attr("transform","translate("+this.border.left/2+","+(this.border.top+5)+") rotate(90)")
-      .text(this.pd.yLabel);
-
-   this.svgContainer.append("text")
-      .attr("x",this.border.left/2+this.xAxisPixelLength)
+      .attr("x",this.border.left+this.xAxisPixelLength-5*this.pd.xLabel.length)
       .attr("y",this.border.top+this.yAxisPixelLength+this.border.bottom/2)
       .text(this.pd.xLabel);
+   this.svgContainer.append("text")
+      .attr("transform","translate("+this.border.left/2+","+(this.border.top)+") rotate(90)")
+      .text(this.pd.yLabel);
 
 };
