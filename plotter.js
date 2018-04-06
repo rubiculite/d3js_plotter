@@ -65,9 +65,16 @@ function plotter(d3_AppendToElement,data) {
       .attr("y",3*this.border.top/4)
       .text(this.pd.title);
 
+   this.gPlotContainer.append("clipPath")
+      .attr("id","plot-boundary")
+      .append("rect")
+      .attr("width",this.xAxisPixelLength)
+      .attr("height",this.yAxisPixelLength);
+
    (function(element,datum,xScale,yScale){element.selectAll(".point").data(datum).enter()
       .append("circle").attr("class","point")
-      .attr("r","3").attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
+      .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
+      .attr("clip-path","url(#plot-boundary)")
       .attr("cx", function(d) { return xScale(d[0]) })
       .attr("cy", function(d) { return yScale(d[1]) });
    })(this.gPlotContainer,this.pd.datum,this.xScale,this.yScale);
