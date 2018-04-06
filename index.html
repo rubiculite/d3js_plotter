@@ -7,6 +7,16 @@
       window.addEventListener('load', function(e) {
          document.getElementById("plotter").innerHTML = "<h1>Hello World!</h1>";
          data = {xMin: 0, xMax: 25, yMin: 0, yMax: 25, xLabel: "x-axis", yLabel: "y-axis", title: "y vs. x"};
+         r=10;
+         x_0=data.xMax/2;
+         y_0=data.yMax/2;
+         datum = [];
+         for (theta=0;theta<2*Math.PI; theta+=Math.PI/10) {
+            x = x_0 + r * Math.cos(theta);
+            y = y_0 + r * Math.sin(theta);
+            datum.push([x,y]);
+         } 
+         data.datum = datum;
          plot = new plotter(d3.select("#plotter"),data);
       });
    </script>
