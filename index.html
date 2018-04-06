@@ -14,7 +14,7 @@
          for (theta=0;theta<2*Math.PI; theta+=Math.PI/10) {
             x = x_0 + r * Math.cos(theta);
             y = y_0 + r * Math.sin(theta);
-            datum.push([x,y]);
+            datum.push({x: x, y: y});
          } 
          data.datum = datum;
          plot = new plotter(d3.select("#plotter"),data);

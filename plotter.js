@@ -71,11 +71,12 @@ function plotter(d3_AppendToElement,data) {
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
 
-   (function(element,datum,xScale,yScale){element.selectAll(".point").data(datum).enter()
-      .append("circle").attr("class","point")
-      .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
-      .attr("clip-path","url(#plot-boundary)")
-      .attr("cx", function(d) { return xScale(d[0]) })
-      .attr("cy", function(d) { return yScale(d[1]) });
+   (function(element,datum,xScale,yScale,tip){
+      element.selectAll(".point").data(datum).enter()
+         .append("circle").attr("class","point")
+         .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
+         .attr("clip-path","url(#plot-boundary)")
+         .attr("cx",function(d){return xScale(d.x)})
+         .attr("cy",function(d){return yScale(d.y)});
    })(this.gPlotContainer,this.pd.datum,this.xScale,this.yScale);
 };
