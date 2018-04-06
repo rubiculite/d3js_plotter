@@ -1,4 +1,4 @@
-# d3js_plotter
+# <a href="https://github.com/d3/d3/wiki">D3.js</a> Plotter
 
 This uses D3.js to create scatter plots.
 
