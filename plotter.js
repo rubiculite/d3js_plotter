@@ -66,12 +66,12 @@ function plotter(d3_AppendToElement,data) {
       .attr("y",3*this.border.top/4)
       .text(this.pd.title);
 
+   // plot the data
    this.gPlotContainer.append("clipPath")
       .attr("id","plot-boundary")
       .append("rect")
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
-
    (function(element,datum,xScale,yScale,tip){
       element.selectAll(".point").data(datum).enter()
          .append("circle").attr("class","point")
