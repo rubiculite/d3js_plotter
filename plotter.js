@@ -72,7 +72,7 @@ function plotter(d3_AppendToElement,data) {
       .append("rect")
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
-   (function(element,datum,xScale,yScale,tip){
+   (function(element,datum,xScale,yScale){
       element.selectAll(".point").data(datum).enter()
          .append("circle").attr("class","point")
          .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
