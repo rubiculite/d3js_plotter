@@ -46,7 +46,7 @@ function plotter(d3_AppendToElement,data) {
 
    // add plot border (required to cover up grid line overlay)
    this.gPlotContainer.append("rect")
-      .style("fill","transparent")
+      .style("fill","none")
       .style("stroke","black")
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
@@ -80,4 +80,37 @@ function plotter(d3_AppendToElement,data) {
          .attr("cx",function(d){return xScale(d.x)})
          .attr("cy",function(d){return yScale(d.y)});
    })(this.gPlotContainer,this.pd.datum,this.xScale,this.yScale);
+
+   // add x-hairs region
+   this.gPlotContainer.append("line").attr("class","x-xhairs")
+      .attr("x1",this.xAxisPixelLength/2).attr("y1",0)
+      .attr("x2",this.xAxisPixelLength/2).attr("y2",this.yAxisPixelLength)
+      .attr("stroke","black").style("display","none");
+   this.gPlotContainer.append("line").attr("class","y-xhairs")
+      .attr("x1",0).attr("y1",this.yAxisPixelLength/2)
+      .attr("x2",this.xAxisPixelLength).attr("y2",this.yAxisPixelLength/2)
+      .attr("stroke","black").style("display","none");
+   (function(element,xHairs,xAxisPixelLength,yAxisPixelLength){
+      element
+         .append("rect")
+         .style("fill","none")
+         .style("stroke","red")
+         .attr("x",0).attr("y",0)
+         .attr("width",xAxisPixelLength)
+         .attr("height",yAxisPixelLength)
+         .style("pointer-events","all")
+         .on("mouseover",function(){
+            element.selectAll(".x-xhairs, .y-xhairs").style("display",null);
+         })
+         .on("mouseout", function(){
+            element.selectAll(".x-xhairs, .y-xhairs").style("display","none");
+         })
+         .on("mousemove",function(){
+            var coords = d3.mouse(this);
+            var xPixels = coords[0];
+            var yPixels = coords[1];
+            element.select("line.x-xhairs").attr("x1",xPixels).attr("x2",xPixels);
+            element.select("line.y-xhairs").attr("y1",yPixels).attr("y2",yPixels);
+         });
+   })(this.gPlotContainer,this.xHairs,this.xAxisPixelLength,this.yAxisPixelLength);
 };
