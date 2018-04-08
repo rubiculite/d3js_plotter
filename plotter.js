@@ -67,7 +67,7 @@ function plotter(d3_AppendToElement,data) {
       .text(this.pd.title);
 
    // plot the data
-   // TA-DO: need to make "plot-boundary" class label unique for each instances, say with an
+   // TA-DO: Need to make "plot-boundary" class label unique for each instance, say with an
    //        instance counter, n, s.t., we have "plot-boundary-n"... 
    this.gPlotContainer.append("clipPath")
       .attr("id","plot-boundary")
