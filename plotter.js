@@ -106,7 +106,7 @@ function plotter(d3_AppendToElement,data) {
       .attr("x",this.xAxisPixelLength/2+5).attr("y",this.yAxisPixelLength/2-5)
       .text(this.ordinats(this.xAxisPixelLength/2,this.yAxisPixelLength/2))
       .style("display","none");
-   (function(element,oridnates,xScale,yScale,xAxisPixelLength,yAxisPixelLength){
+   (function(element,oridnates,xAxisPixelLength,yAxisPixelLength){
       element
          .append("rect")
          .style("fill","none")
@@ -133,5 +133,5 @@ function plotter(d3_AppendToElement,data) {
                .attr("clip-path","url(#plot-boundary)")
                .text(annotation);
          });
-   })(this.gPlotContainer,this.ordinats,this.xScale,this.yScale,this.xAxisPixelLength,this.yAxisPixelLength);
+   })(this.gPlotContainer,this.ordinats,this.xAxisPixelLength,this.yAxisPixelLength);
 };
