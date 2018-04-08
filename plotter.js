@@ -82,35 +82,54 @@ function plotter(d3_AppendToElement,data) {
    })(this.gPlotContainer,this.pd.datum,this.xScale,this.yScale);
 
    // add x-hairs region
-   this.gPlotContainer.append("line").attr("class","x-xhairs")
+   this.ordinats = (function(xScale,yScale){ 
+      return function(xPixels,yPixels) {
+         return "("
+            +(Number(xScale.invert(xPixels)).toFixed(1))+", "
+            +(Number(yScale.invert(yPixels)).toFixed(1))+
+         ")";
+      };
+   })(this.xScale,this.yScale);
+   this.gPlotContainer.append("line").attr("class","x-xhair")
       .attr("x1",this.xAxisPixelLength/2).attr("y1",0)
       .attr("x2",this.xAxisPixelLength/2).attr("y2",this.yAxisPixelLength)
-      .attr("stroke","black").style("display","none");
-   this.gPlotContainer.append("line").attr("class","y-xhairs")
+      .attr("stroke","black")
+      .style("display","none");
+   this.gPlotContainer.append("line").attr("class","y-xhair")
       .attr("x1",0).attr("y1",this.yAxisPixelLength/2)
       .attr("x2",this.xAxisPixelLength).attr("y2",this.yAxisPixelLength/2)
-      .attr("stroke","black").style("display","none");
-   (function(element,xHairs,xAxisPixelLength,yAxisPixelLength){
+      .attr("stroke","black")
+      .style("display","none");
+   this.gPlotContainer.append("text").attr("class","xhair-annotation")
+      .attr("x",this.xAxisPixelLength/2+5).attr("y",this.yAxisPixelLength/2-5)
+      .text(this.ordinats(this.xAxisPixelLength/2,this.yAxisPixelLength/2))
+      .style("display","none");
+   (function(element,oridnates,xScale,yScale,xAxisPixelLength,yAxisPixelLength){
       element
          .append("rect")
          .style("fill","none")
-         .style("stroke","red")
          .attr("x",0).attr("y",0)
          .attr("width",xAxisPixelLength)
          .attr("height",yAxisPixelLength)
          .style("pointer-events","all")
          .on("mouseover",function(){
-            element.selectAll(".x-xhairs, .y-xhairs").style("display",null);
+            element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display",null);
          })
          .on("mouseout", function(){
-            element.selectAll(".x-xhairs, .y-xhairs").style("display","none");
+            element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display","none");
          })
          .on("mousemove",function(){
             var coords = d3.mouse(this);
             var xPixels = coords[0];
             var yPixels = coords[1];
-            element.select("line.x-xhairs").attr("x1",xPixels).attr("x2",xPixels);
-            element.select("line.y-xhairs").attr("y1",yPixels).attr("y2",yPixels);
+            var annotation = oridnates(xPixels,yPixels)
+            element.select("line.x-xhair").attr("x1",xPixels).attr("x2",xPixels);
+            element.select("line.y-xhair").attr("y1",yPixels).attr("y2",yPixels);
+            element.select("text.xhair-annotation")
+               .attr("x",xPixels-((xPixels<xAxisPixelLength/2)?-5:6.25*annotation.length+5))
+               .attr("y",yPixels-((yPixels<yAxisPixelLength/2)?-15:5))
+               .attr("clip-path","url(#plot-boundary)")
+               .text(annotation);
          });
-   })(this.gPlotContainer,this.xHairs,this.xAxisPixelLength,this.yAxisPixelLength);
+   })(this.gPlotContainer,this.ordinats,this.xScale,this.yScale,this.xAxisPixelLength,this.yAxisPixelLength);
 };
