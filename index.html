@@ -11,13 +11,22 @@
          x_0=data.xMax/2;
          y_0=data.yMax/2;
          datum = [];
-         for (theta=0;theta<2*Math.PI; theta+=Math.PI/10) {
+         for (theta=0;theta<2*Math.PI; theta+=Math.PI/50) {
             x = x_0 + r * Math.cos(theta);
             y = y_0 + r * Math.sin(theta);
             datum.push({x: x, y: y});
          } 
          data.datum = datum;
-         plot = new plotter(d3.select("#plotter"),data);
+         plot1 = new plotter("plot1",data);
+         datum = [];
+         k = 2 * Math.PI / (4 * r);
+         for (theta=0;theta<2*Math.PI; theta+=Math.PI/100) {
+            x = x_0 + r * Math.cos(theta);
+            y = y_0 + r * Math.sin(theta)*Math.sin(k*r*Math.cos(theta));
+            datum.push({x: x, y: y});
+         } 
+         data.datum = datum;
+         plot2 = new plotter("plot2",data);
       });
    </script>
 </html>
@@ -25,5 +34,8 @@
 </head>
 <body>
 <div id="plotter"></div>
+<table>
+<tr><td id="plot1"></td><td id="plot2"></td></tr>
+</table>
 </body>
 </html>

@@ -6,7 +6,7 @@
 //
 
 // Notes: http://bl.ocks.org/peterssonjonas/4a0e7cb8d23231243e0e
-function plotter(d3_AppendToElement,data) {
+function plotter(element_id,data) {
 
    this.pd = data;
 
@@ -22,7 +22,7 @@ function plotter(d3_AppendToElement,data) {
    this.yAxis = d3.axisLeft(this.yScale);
 
    // create svg container
-   this.svgContainer = d3_AppendToElement.append("svg")
+   this.svgContainer = d3.select("#"+element_id).append("svg")
       .attr("width",this.border.left+this.xAxisPixelLength+this.border.right)
       .attr("height",this.border.top+this.yAxisPixelLength+this.border.bottom);
 
@@ -67,21 +67,20 @@ function plotter(d3_AppendToElement,data) {
       .text(this.pd.title);
 
    // plot the data
-   // TA-DO: Need to make "plot-boundary" class label unique for each instance, say with an
-   //        instance counter, n, s.t., we have "plot-boundary-n"... 
+   this.idClibPath = "plot-boundary-"+element_id;
    this.gPlotContainer.append("clipPath")
-      .attr("id","plot-boundary")
+      .attr("id",this.idClibPath)
       .append("rect")
       .attr("width",this.xAxisPixelLength)
       .attr("height",this.yAxisPixelLength);
-   (function(element,datum,xScale,yScale){
+   (function(element,datum,idClibPath,xScale,yScale){
       element.selectAll(".point").data(datum).enter()
          .append("circle").attr("class","point")
          .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
-         .attr("clip-path","url(#plot-boundary)")
+         .attr("clip-path","url(#"+idClibPath+")")
          .attr("cx",function(d){return xScale(d.x)})
          .attr("cy",function(d){return yScale(d.y)});
-   })(this.gPlotContainer,this.pd.datum,this.xScale,this.yScale);
+   })(this.gPlotContainer,this.pd.datum,this.idClibPath,this.xScale,this.yScale);
 
    // add x-hairs region
    this.ordinats = (function(xScale,yScale){ 
