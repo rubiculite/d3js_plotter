@@ -11,8 +11,19 @@ function plotter(element_id,data) {
    this.pd = data;
 
    // define plot layout
-   this.xAxisPixelLength = 400;
-   this.yAxisPixelLength = 400;
+   this.axesLength = 400;
+   this.dx= Math.abs(this.pd.xMax-this.pd.xMin);
+   this.dy= Math.abs(this.pd.yMax-this.pd.yMin);
+   if (this.dx == this.dy) {
+      this.xAxisPixelLength = this.axesLength;
+      this.yAxisPixelLength = this.axesLength;
+   } else if (this.dx > this.dy) {
+      this.yAxisPixelLength = this.axesLength;
+      this.xAxisPixelLength = this.yAxisPixelLength * this.dx/this.dy;
+   } else {
+      this.xAxisPixelLength = this.axesLength;
+      this.yAxisPixelLength = this.xAxisPixelLength * this.dy/this.dx;
+   }
    this.border = {top: 50, right: 50, bottom: 75, left: 75};
 
    // define axes
