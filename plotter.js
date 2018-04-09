@@ -95,16 +95,17 @@ function plotter(d3_AppendToElement,data) {
    this.gPlotContainer.append("line").attr("class","x-xhair")
       .attr("x1",this.xAxisPixelLength/2).attr("y1",0)
       .attr("x2",this.xAxisPixelLength/2).attr("y2",this.yAxisPixelLength)
-      .attr("stroke","black")
+      .attr("stroke","blue")
       .style("display","none");
    this.gPlotContainer.append("line").attr("class","y-xhair")
       .attr("x1",0).attr("y1",this.yAxisPixelLength/2)
       .attr("x2",this.xAxisPixelLength).attr("y2",this.yAxisPixelLength/2)
-      .attr("stroke","black")
+      .attr("stroke","blue")
       .style("display","none");
    this.gPlotContainer.append("text").attr("class","xhair-annotation")
       .attr("x",this.xAxisPixelLength/2+5).attr("y",this.yAxisPixelLength/2-5)
       .text(this.ordinats(this.xAxisPixelLength/2,this.yAxisPixelLength/2))
+      .attr("fill","blue")
       .style("display","none");
    (function(element,oridnates,xAxisPixelLength,yAxisPixelLength){
       element
