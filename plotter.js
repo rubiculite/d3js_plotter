@@ -141,6 +141,7 @@ function plotter(element_id,data) {
             element.select("text.xhair-annotation")
                .attr("x",xPixels-((xPixels<xAxisPixelLength/2)?-5:6.25*annotation.length+5))
                .attr("y",yPixels-((yPixels<yAxisPixelLength/2)?-15:5))
+               // TA-DO: make local...
                .attr("clip-path","url(#plot-boundary)")
                .text(annotation);
          });
