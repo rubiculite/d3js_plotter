@@ -32,8 +32,8 @@ function plotter(element_id,data) {
    // define axes
    this.xScale = d3.scaleLinear().domain([this.pd.xMin,this.pd.xMax]).range([0,this.xAxisPixelLength]).nice();
    this.yScale = d3.scaleLinear().domain([this.pd.yMin,this.pd.yMax]).range([this.yAxisPixelLength,0]).nice();
-   this.xAxis = d3.axisBottom(this.xScale);
-   this.yAxis = d3.axisLeft(this.yScale);
+   this.xAxis = d3.axisBottom(this.xScale).ticks(5);
+   this.yAxis = d3.axisLeft(this.yScale).ticks(10);
 
    // create svg container
    this.svgContainer = d3.select("#"+element_id).append("svg")
