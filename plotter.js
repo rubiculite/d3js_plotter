@@ -14,6 +14,8 @@ function plotter(element_id,data) {
    this.axesLength = 400;
    this.dx= Math.abs(this.pd.xMax-this.pd.xMin);
    this.dy= Math.abs(this.pd.yMax-this.pd.yMin);
+   // TA-DO: Temporary fix until with can parameter options...
+   this.dy=this.dx;
    if (this.dx == this.dy) {
       this.xAxisPixelLength = this.axesLength;
       this.yAxisPixelLength = this.axesLength;
