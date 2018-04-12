@@ -11,7 +11,8 @@ function plotter(element_id,data) {
    this.pd = data;
 
    // define plot layout
-   this.axesLength = 400;
+   //this.axesLength = 400;
+   this.axesLength = 200;
    this.dx= Math.abs(this.pd.xMax-this.pd.xMin);
    this.dy= Math.abs(this.pd.yMax-this.pd.yMin);
    // TA-DO: Temporary fix until with can parameter options...
@@ -75,7 +76,7 @@ function plotter(element_id,data) {
 
    // plot title
    this.svgContainer.append("text")
-      .attr("x",this.border.left+(this.xAxisPixelLength-5*this.pd.title.length)/2)
+      .attr("x",this.border.left+(this.xAxisPixelLength-8*this.pd.title.length)/2)
       .attr("y",3*this.border.top/4)
       .text(this.pd.title);
 
