@@ -166,6 +166,7 @@ function plotter(element_id,data) {
       return {
          update: function () {
             console.log("Hello world!");
+            console.log(pd);
          }
       }
 };
