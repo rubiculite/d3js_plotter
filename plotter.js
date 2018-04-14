@@ -11,7 +11,23 @@ function plotterFactory() {
 
    var createPlotter = function(element_id,data) {
 
-      var pd = data;
+      var pd = (function(){
+         var pData = [];
+         for (key in data) {
+            if (data.hasOwnProperty(key)) {
+               if (key == 'datum') {
+                  var points = [];
+                  for (i=0;i<data.datum.length;i++) {
+                     points.push({x: data.datum[i].x, y: data.datum[i].y});
+                  }
+                  pData.datum=points;
+               } else {
+                 pData[key]=data[key];
+               }
+            }
+         }
+         return pData;
+      })();
    
       // define plot layout
       //axesLength = 400;
@@ -152,25 +168,7 @@ function plotterFactory() {
    return {
       new: function(element_id,data) {
 
-         var privateData = (function(){
-            var pData = [];
-            for (key in data) {
-               if (data.hasOwnProperty(key)) {
-                  if (key == 'datum') {
-                     var points = [];
-                     for (i=0;i<data.datum.length;i++) {
-                        points.push({x: data.datum[i].x, y: data.datum[i].y});
-                     }
-                     pData.datum=points;
-                  } else {
-                    pData[key]=data[key];
-                  }
-               }
-            }
-            return pData;
-         })();
-
-         var this_plotter = new createPlotter(element_id,privateData);
+         var this_plotter = new createPlotter(element_id,data);
          
          return {
             update() {
