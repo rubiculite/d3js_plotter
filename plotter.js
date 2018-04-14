@@ -11,147 +11,142 @@ function plotterFactory() {
 
    var createPlotter = function(element_id,data) {
 
-      this.pd = data;
+      var pd = data;
    
       // define plot layout
-      //this.axesLength = 400;
-      this.axesLength = 200;
-      this.dx= Math.abs(this.pd.xMax-this.pd.xMin);
-      this.dy= Math.abs(this.pd.yMax-this.pd.yMin);
+      //axesLength = 400;
+      var axesLength = 200;
+      var dx= Math.abs(pd.xMax-pd.xMin);
+      var dy= Math.abs(pd.yMax-pd.yMin);
       // TA-DO: Temporary fix until with can parameter options...
-      this.dy=this.dx;
-      if (this.dx == this.dy) {
-         this.xAxisPixelLength = this.axesLength;
-         this.yAxisPixelLength = this.axesLength;
-      } else if (this.dx > this.dy) {
-         this.yAxisPixelLength = this.axesLength;
-         this.xAxisPixelLength = this.yAxisPixelLength * this.dx/this.dy;
-      } else {
-         this.xAxisPixelLength = this.axesLength;
-         this.yAxisPixelLength = this.xAxisPixelLength * this.dy/this.dx;
+      dy=dx;
+      var xAxisPixelLength = axesLength;
+      var yAxisPixelLength = xAxisPixelLength * dy/dx;
+      if (dx == dy) {
+         xAxisPixelLength = axesLength;
+         yAxisPixelLength = axesLength;
+      } else if (dx > dy) {
+         yAxisPixelLength = axesLength;
+         xAxisPixelLength = yAxisPixelLength * dx/dy;
       }
-      this.border = {top: 50, right: 50, bottom: 75, left: 75};
+      var border = {top: 50, right: 50, bottom: 75, left: 75};
    
       // define axes
-      this.xScale = d3.scaleLinear().domain([this.pd.xMin,this.pd.xMax]).range([0,this.xAxisPixelLength]).nice();
-      this.yScale = d3.scaleLinear().domain([this.pd.yMin,this.pd.yMax]).range([this.yAxisPixelLength,0]).nice();
-      this.xAxis = d3.axisBottom(this.xScale).ticks(5);
-      this.yAxis = d3.axisLeft(this.yScale).ticks(10);
+      var xScale = d3.scaleLinear().domain([pd.xMin,pd.xMax]).range([0,xAxisPixelLength]).nice();
+      var yScale = d3.scaleLinear().domain([pd.yMin,pd.yMax]).range([yAxisPixelLength,0]).nice();
+      var xAxis = d3.axisBottom(xScale).ticks(5);
+      var yAxis = d3.axisLeft(yScale).ticks(10);
    
       // create svg container
-      this.svgContainer = d3.select("#"+element_id).append("svg")
-         .attr("width",this.border.left+this.xAxisPixelLength+this.border.right)
-         .attr("height",this.border.top+this.yAxisPixelLength+this.border.bottom);
+      var svgContainer = d3.select("#"+element_id).append("svg")
+         .attr("width",border.left+xAxisPixelLength+border.right)
+         .attr("height",border.top+yAxisPixelLength+border.bottom);
    
       // create plot container
-      this.gPlotContainer = this.svgContainer.append("g").attr("class","scatter-plot")
-         .attr("transform","translate("+this.border.left+","+this.border.top+")");
+      var gPlotContainer = svgContainer.append("g").attr("class","scatter-plot")
+         .attr("transform","translate("+border.left+","+border.top+")");
    
       // add axis ticks and numbers
-      this.gPlotContainer.append("g").attr("class","x-axis")
-         .attr("transform","translate(0,"+this.yAxisPixelLength+")")
-         .call(this.xAxis);
-      this.gPlotContainer.append("g").attr("class","y-axis").call(this.yAxis);
+      gPlotContainer.append("g").attr("class","x-axis")
+         .attr("transform","translate(0,"+yAxisPixelLength+")")
+         .call(xAxis);
+      gPlotContainer.append("g").attr("class","y-axis").call(yAxis);
    
       // add grid lines
-      this.gPlotContainer.append("g").attr("class","grid-lines")
-         .attr("transform","translate(0,"+this.yAxisPixelLength+")")
-         .call(this.xAxis.tickSize(-this.yAxisPixelLength).tickFormat(""));
-      this.gPlotContainer.append("g").attr("class","grid-lines")
-         .call(this.yAxis.tickSize(-this.xAxisPixelLength).tickFormat(""));
-      this.gPlotContainer.selectAll(".grid-lines line").style("stroke","lightgrey");
+      gPlotContainer.append("g").attr("class","grid-lines")
+         .attr("transform","translate(0,"+yAxisPixelLength+")")
+         .call(xAxis.tickSize(-yAxisPixelLength).tickFormat(""));
+      gPlotContainer.append("g").attr("class","grid-lines")
+         .call(yAxis.tickSize(-xAxisPixelLength).tickFormat(""));
+      gPlotContainer.selectAll(".grid-lines line").style("stroke","lightgrey");
    
       // add plot border (required to cover up grid line overlay)
-      this.gPlotContainer.append("rect")
+      gPlotContainer.append("rect")
          .style("fill","none")
          .style("stroke","black")
-         .attr("width",this.xAxisPixelLength)
-         .attr("height",this.yAxisPixelLength);
+         .attr("width",xAxisPixelLength)
+         .attr("height",yAxisPixelLength);
    
       // axis labels
-      this.svgContainer.append("text")
-         .attr("x",this.border.left+this.xAxisPixelLength-5*this.pd.xLabel.length)
-         .attr("y",this.border.top+this.yAxisPixelLength+this.border.bottom/2)
-         .text(this.pd.xLabel);
-      this.svgContainer.append("text")
-         .attr("transform","translate("+this.border.left/2+","+(this.border.top)+") rotate(90)")
-         .text(this.pd.yLabel);
+      svgContainer.append("text")
+         .attr("x",border.left+xAxisPixelLength-5*pd.xLabel.length)
+         .attr("y",border.top+yAxisPixelLength+border.bottom/2)
+         .text(pd.xLabel);
+      svgContainer.append("text")
+         .attr("transform","translate("+border.left/2+","+(border.top)+") rotate(90)")
+         .text(pd.yLabel);
    
       // plot title
-      this.svgContainer.append("text")
-         .attr("x",this.border.left+(this.xAxisPixelLength-8*this.pd.title.length)/2)
-         .attr("y",3*this.border.top/4)
-         .text(this.pd.title);
+      svgContainer.append("text")
+         .attr("x",border.left+(xAxisPixelLength-8*pd.title.length)/2)
+         .attr("y",3*border.top/4)
+         .text(pd.title);
    
       // plot the data
-      this.idClibPath = "plot-boundary-"+element_id;
-      this.gPlotContainer.append("clipPath")
-         .attr("id",this.idClibPath)
+      var idClibPath = "plot-boundary-"+element_id;
+      gPlotContainer.append("clipPath")
+         .attr("id",idClibPath)
          .append("rect")
-         .attr("width",this.xAxisPixelLength)
-         .attr("height",this.yAxisPixelLength);
-      (function(element,datum,idClibPath,xScale,yScale){
-         element.selectAll(".point").data(datum).enter()
-            .append("circle").attr("class","point")
-            .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
-            .attr("clip-path","url(#"+idClibPath+")")
-            .attr("cx",function(d){return xScale(d.x)})
-            .attr("cy",function(d){return yScale(d.y)});
-      })(this.gPlotContainer,this.pd.datum,this.idClibPath,this.xScale,this.yScale);
+         .attr("width",xAxisPixelLength)
+         .attr("height",yAxisPixelLength);
+      gPlotContainer.selectAll(".point").data(datum).enter()
+         .append("circle").attr("class","point")
+         .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
+         .attr("clip-path","url(#"+idClibPath+")")
+         .attr("cx",function(d){return xScale(d.x)})
+         .attr("cy",function(d){return yScale(d.y)});
    
       // add x-hairs region
-      this.ordinats = (function(xScale,yScale){ 
+      var ordinats = (function(xScale,yScale){ 
          return function(xPixels,yPixels) {
             return "("
                +(Number(xScale.invert(xPixels)).toFixed(1))+", "
                +(Number(yScale.invert(yPixels)).toFixed(1))+
             ")";
          };
-      })(this.xScale,this.yScale);
-      this.gPlotContainer.append("line").attr("class","x-xhair")
-         .attr("x1",this.xAxisPixelLength/2).attr("y1",0)
-         .attr("x2",this.xAxisPixelLength/2).attr("y2",this.yAxisPixelLength)
+      })(xScale,yScale);
+      gPlotContainer.append("line").attr("class","x-xhair")
+         .attr("x1",xAxisPixelLength/2).attr("y1",0)
+         .attr("x2",xAxisPixelLength/2).attr("y2",yAxisPixelLength)
          .attr("stroke","blue")
          .style("display","none");
-      this.gPlotContainer.append("line").attr("class","y-xhair")
-         .attr("x1",0).attr("y1",this.yAxisPixelLength/2)
-         .attr("x2",this.xAxisPixelLength).attr("y2",this.yAxisPixelLength/2)
+      gPlotContainer.append("line").attr("class","y-xhair")
+         .attr("x1",0).attr("y1",yAxisPixelLength/2)
+         .attr("x2",xAxisPixelLength).attr("y2",yAxisPixelLength/2)
          .attr("stroke","blue")
          .style("display","none");
-      this.gPlotContainer.append("text").attr("class","xhair-annotation")
-         .attr("x",this.xAxisPixelLength/2+5).attr("y",this.yAxisPixelLength/2-5)
-         .text(this.ordinats(this.xAxisPixelLength/2,this.yAxisPixelLength/2))
+      gPlotContainer.append("text").attr("class","xhair-annotation")
+         .attr("x",xAxisPixelLength/2+5).attr("y",yAxisPixelLength/2-5)
+         .text(ordinats(xAxisPixelLength/2,yAxisPixelLength/2))
          .attr("fill","blue")
          .style("display","none");
-      (function(element,oridnates,xAxisPixelLength,yAxisPixelLength){
-         element
-            .append("rect")
-            .style("fill","none")
-            .attr("x",0).attr("y",0)
-            .attr("width",xAxisPixelLength)
-            .attr("height",yAxisPixelLength)
-            .style("pointer-events","all")
-            .on("mouseover",function(){
-               element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display",null);
-            })
-            .on("mouseout", function(){
-               element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display","none");
-            })
-            .on("mousemove",function(){
-               var coords = d3.mouse(this);
-               var xPixels = coords[0];
-               var yPixels = coords[1];
-               var annotation = oridnates(xPixels,yPixels)
-               element.select("line.x-xhair").attr("x1",xPixels).attr("x2",xPixels);
-               element.select("line.y-xhair").attr("y1",yPixels).attr("y2",yPixels);
-               element.select("text.xhair-annotation")
-                  .attr("x",xPixels-((xPixels<xAxisPixelLength/2)?-5:6.25*annotation.length+5))
-                  .attr("y",yPixels-((yPixels<yAxisPixelLength/2)?-15:5))
-                  // TA-DO: make local...
-                  .attr("clip-path","url(#plot-boundary)")
-                  .text(annotation);
-            });
-      })(this.gPlotContainer,this.ordinats,this.xAxisPixelLength,this.yAxisPixelLength);
+      gPlotContainer
+         .append("rect")
+         .style("fill","none")
+         .attr("x",0).attr("y",0)
+         .attr("width",xAxisPixelLength)
+         .attr("height",yAxisPixelLength)
+         .style("pointer-events","all")
+         .on("mouseover",function(){
+            element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display",null);
+         })
+         .on("mouseout", function(){
+            element.selectAll(".x-xhair, .y-xhair, .xhair-annotation").style("display","none");
+         })
+         .on("mousemove",function(){
+            var coords = d3.mouse(this);
+            var xPixels = coords[0];
+            var yPixels = coords[1];
+            var annotation = oridnates(xPixels,yPixels)
+            element.select("line.x-xhair").attr("x1",xPixels).attr("x2",xPixels);
+            element.select("line.y-xhair").attr("y1",yPixels).attr("y2",yPixels);
+            element.select("text.xhair-annotation")
+               .attr("x",xPixels-((xPixels<xAxisPixelLength/2)?-5:6.25*annotation.length+5))
+               .attr("y",yPixels-((yPixels<yAxisPixelLength/2)?-15:5))
+               // TA-DO: make local...
+               .attr("clip-path","url(#plot-boundary)")
+               .text(annotation);
+         });
    };
 
    return {
