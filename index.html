@@ -5,6 +5,7 @@
    <script type="text/javascript" src="plotter.js"></script>
    <script type="text/javascript" charset="utf-8">
       window.addEventListener('load', function(e) {
+         plotter =plotterFactory();
          document.getElementById("plotter").innerHTML = "<h1>Harry Plotter!</h1>";
          data = {xMin: 0, xMax: 35, yMin: 0, yMax: 25, xLabel: "x-axis", yLabel: "y-axis", title: "y vs. x"};
          r=10;
@@ -17,7 +18,7 @@
             datum.push({x: x, y: y});
          } 
          data.datum = datum;
-         plot1 = new plotter("plot1",data);
+         plot1 = plotter.new("plot1",data);
          data.xMax=25;
          data.yMax=25;
          x_0=data.xMax/2;
@@ -30,7 +31,7 @@
             datum.push({x: x, y: y});
          } 
          data.datum = datum;
-	 plot2 = new plotter("plot2",data);
+	 plot2 = plotter.new("plot2",data);
          data.xMax=25;
          data.yMax=35;
 	 x_0=data.xMax/2;
@@ -43,7 +44,7 @@
 	    datum.push({x: x, y: y});
 	 } 
 	 data.datum = datum;
-         plot3 = new plotter("plot3",data);
+         plot3 = plotter.new("plot3",data);
          data.xMax=25;
          data.yMax=25;
 	 x_0=data.xMax/2;
@@ -56,7 +57,7 @@
 	    datum.push({x: x, y: y});
 	 } 
 	 data.datum = datum;
-         plot4 = new plotter("plot4",data);
+         plot4 = plotter.new("plot4",data);
       });
    </script>
 </html>
