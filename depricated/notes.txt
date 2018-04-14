@@ -1,0 +1,6 @@
+I'm keeping the following files, 
+
+   plotter_01.js                -- uses the old this.xxx method
+   plotter_02_has_minor_bugs.js -- factory example (bugs can easily be fixed if we revert to this one)
+
+around for now, until I'm satified with the new simplifications.
