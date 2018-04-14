@@ -104,7 +104,7 @@ function plotter(element_id,data) {
       .append("rect")
       .attr("width",xAxisPixelLength)
       .attr("height",yAxisPixelLength);
-   gPlotContainer.selectAll(".point").data(datum).enter()
+   gPlotContainer.selectAll(".point").data(pd.datum).enter()
       .append("circle").attr("class","point")
       .attr("r",3).attr("stroke","black").attr("stroke-width",1.25).attr("fill","none")
       .attr("clip-path","url(#"+idClibPath+")")
