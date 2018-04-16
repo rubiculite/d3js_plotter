@@ -44,7 +44,7 @@ function plotter(element_id,data) {
       yAxisPixelLength = axesLength;
       xAxisPixelLength = yAxisPixelLength * dx/dy;
    }
-   var border = {top: 50, right: 50, bottom: 75, left: 75};
+   var border = {top: 25, right: 25, bottom: 50, left: 50};
 
    // define axes
    var xScale = d3.scaleLinear().domain([pd.xMin,pd.xMax]).range([0,xAxisPixelLength]).nice();
@@ -85,16 +85,16 @@ function plotter(element_id,data) {
    // axis labels
    svgContainer.append("text")
       .attr("x",border.left+xAxisPixelLength-5*pd.xLabel.length)
-      .attr("y",border.top+yAxisPixelLength+border.bottom/2)
+      .attr("y",border.top+yAxisPixelLength+3*border.bottom/4)
       .text(pd.xLabel);
    svgContainer.append("text")
-      .attr("transform","translate("+border.left/2+","+(border.top)+") rotate(90)")
+      .attr("transform","translate("+border.left/4+","+(border.top)+") rotate(90)")
       .text(pd.yLabel);
 
    // plot title
    svgContainer.append("text")
       .attr("x",border.left+(xAxisPixelLength-8*pd.title.length)/2)
-      .attr("y",3*border.top/4)
+      .attr("y",5*border.top/8)
       .text(pd.title);
 
    // plot the data
