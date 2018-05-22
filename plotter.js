@@ -7,7 +7,7 @@
 
 // Notes: http://bl.ocks.org/peterssonjonas/4a0e7cb8d23231243e0e
 //        http://www.dofactory.com/javascript/factory-method-design-pattern
-function plotter(element_id,data) {
+function plotter(target,data) {
 
    // create a private copy of the data
    var pd = (function(){
@@ -53,7 +53,7 @@ function plotter(element_id,data) {
    var yAxis = d3.axisLeft(yScale).ticks(10);
 
    // create svg container
-   var svgContainer = d3.select("#"+element_id).append("svg")
+   var svgContainer = d3.select(target).append("svg")
       .attr("width",border.left+xAxisPixelLength+border.right)
       .attr("height",border.top+yAxisPixelLength+border.bottom);
 
@@ -98,7 +98,7 @@ function plotter(element_id,data) {
       .text(pd.title);
 
    // plot the data
-   var idClibPath = "plot-boundary-"+element_id;
+   var idClibPath = "plot-boundary-"+target;
    gPlotContainer.append("clipPath")
       .attr("id",idClibPath)
       .append("rect")

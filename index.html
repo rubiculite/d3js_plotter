@@ -17,7 +17,7 @@
             datum.push({x: x, y: y});
          } 
          data.datum = datum;
-         plot1 = new plotter("plot1",data);
+         plot1 = new plotter("#plot1",data);
          data.xMax=25;
          data.yMax=25;
          x_0=data.xMax/2;
@@ -30,7 +30,7 @@
             datum.push({x: x, y: y});
          } 
          data.datum = datum;
-	 plot2 = new plotter("plot2",data);
+	 plot2 = new plotter("#plot2",data);
          data.xMax=25;
          data.yMax=35;
 	 x_0=data.xMax/2;
@@ -43,7 +43,7 @@
 	    datum.push({x: x, y: y});
 	 } 
 	 data.datum = datum;
-         plot3 = new plotter("plot3",data);
+         plot3 = new plotter("#plot3",data);
          data.xMax=25;
          data.yMax=25;
 	 x_0=data.xMax/2;
@@ -56,7 +56,7 @@
 	    datum.push({x: x, y: y});
 	 } 
 	 data.datum = datum;
-         plot4 = new plotter("plot4",data);
+         plot4 = new plotter("#plot4",data);
       });
    </script>
 </html>
